@@ -34,4 +34,6 @@ class AmbiguousCommandError(CLIError):
 
 
 class CommandArgumentsError(CLIError):
-    pass
+    def __init__(self, msg):
+        msg = 'bad arguments: %s' % (msg,)
+        CLIError.__init__(self, msg)
