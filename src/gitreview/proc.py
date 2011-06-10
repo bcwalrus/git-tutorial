@@ -198,7 +198,7 @@ def run_oneline_cmd(args, cwd=None, env=None):
     num_lines = len(lines)
     if num_lines < 2:
         # XXX: It would be nice to include cmd_out in the exception
-        msg = 'did not print a terminating newline'
+        msg = 'did not print a terminating newline: "%s"' % (cmd_out,)
         raise CmdFailedError(args, msg)
     elif num_lines > 2 or lines[1]:
         # XXX: It would be nice to include cmd_out in the exception
