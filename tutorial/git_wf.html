@@ -1,0 +1,1021 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<title>My Git Workflow</title>
+<meta name="author" content="bc Wong" />
+<meta name="date" content="Jun 12, 2011" />
+<style type="text/css">
+
+/*
+:Author: David Goodger (goodger@python.org)
+:Id: $Id: html4css1.css 5951 2009-05-18 18:03:10Z milde $
+:Copyright: This stylesheet has been placed in the public domain.
+
+Default cascading style sheet for the HTML output of Docutils.
+
+See http://docutils.sf.net/docs/howto/html-stylesheets.html for how to
+customize this style sheet.
+*/
+
+/* used to remove borders from tables and images */
+.borderless, table.borderless td, table.borderless th {
+  border: 0 }
+
+table.borderless td, table.borderless th {
+  /* Override padding for "table.docutils td" with "! important".
+     The right padding separates the table cells. */
+  padding: 0 0.5em 0 0 ! important }
+
+.first {
+  /* Override more specific margin styles with "! important". */
+  margin-top: 0 ! important }
+
+.last, .with-subtitle {
+  margin-bottom: 0 ! important }
+
+.hidden {
+  display: none }
+
+a.toc-backref {
+  text-decoration: none ;
+  color: #527bbd; }
+
+blockquote.epigraph {
+  margin: 2em 5em ; }
+
+dl.docutils dd {
+  margin-bottom: 0.5em }
+
+dl.docutils dt {
+  color: navy
+}
+
+div.abstract {
+  margin: 2em 5em }
+
+div.abstract p.topic-title {
+  font-weight: bold ;
+  text-align: center }
+
+div.admonition, div.attention, div.caution, div.danger, div.error,
+div.hint, div.important, div.note, div.tip, div.warning {
+  margin: 2em ;
+  border: medium outset ;
+  padding: 1em }
+
+div.admonition p.admonition-title, div.hint p.admonition-title,
+div.important p.admonition-title, div.note p.admonition-title,
+div.tip p.admonition-title {
+  font-weight: bold ;
+  font-family: sans-serif }
+
+div.attention p.admonition-title, div.caution p.admonition-title,
+div.danger p.admonition-title, div.error p.admonition-title,
+div.warning p.admonition-title {
+  color: red ;
+  font-weight: bold ;
+  font-family: sans-serif }
+
+/* Uncomment (and remove this text!) to get reduced vertical space in
+   compound paragraphs.
+div.compound .compound-first, div.compound .compound-middle {
+  margin-bottom: 0.5em }
+
+div.compound .compound-last, div.compound .compound-middle {
+  margin-top: 0.5em }
+*/
+
+div.dedication {
+  margin: 2em 5em ;
+  text-align: center ;
+  font-style: italic }
+
+div.dedication p.topic-title {
+  font-weight: bold ;
+  font-style: normal }
+
+div.figure {
+  margin-left: 2em ;
+  margin-right: 2em }
+
+div.footer, div.header {
+  clear: both;
+  font-size: smaller }
+
+div.line-block {
+  display: block ;
+  margin-top: 1em ;
+  margin-bottom: 1em }
+
+div.line-block div.line-block {
+  margin-top: 0 ;
+  margin-bottom: 0 ;
+  margin-left: 1.5em }
+
+div.sidebar {
+  margin: 0 0 0.5em 1em ;
+  border: medium outset ;
+  padding: 1em ;
+  background-color: #ffffee ;
+  width: 40% ;
+  float: right ;
+  clear: right }
+
+div.sidebar p.rubric {
+  font-family: sans-serif ;
+  font-size: medium }
+
+div.system-messages {
+  margin: 5em }
+
+div.system-messages h1 {
+  color: red }
+
+div.system-message {
+  border: medium outset ;
+  padding: 1em }
+
+div.system-message p.system-message-title {
+  color: red ;
+  font-weight: bold }
+
+div.topic {
+  margin: 2em }
+
+h1.section-subtitle, h2.section-subtitle, h3.section-subtitle,
+h4.section-subtitle, h5.section-subtitle, h6.section-subtitle {
+  margin-top: 0.4em }
+
+h1.title {
+  text-align: center }
+
+h2.subtitle {
+  text-align: center }
+
+hr.docutils {
+  width: 75% }
+
+img.align-left, .figure.align-left{
+  clear: left ;
+  float: left ;
+  margin-right: 1em }
+
+img.align-right, .figure.align-right {
+  clear: right ;
+  float: right ;
+  margin-left: 1em }
+
+.align-left {
+  text-align: left }
+
+.align-center {
+  clear: both ;
+  text-align: center }
+
+.align-right {
+  text-align: right }
+
+/* reset inner alignment in figures */
+div.align-right {
+  text-align: left }
+
+/* div.align-center * { */
+/*   text-align: left } */
+
+ol.simple, ul.simple {
+  margin-bottom: 1em }
+
+ol.arabic {
+  list-style: decimal }
+
+ol.loweralpha {
+  list-style: lower-alpha }
+
+ol.upperalpha {
+  list-style: upper-alpha }
+
+ol.lowerroman {
+  list-style: lower-roman }
+
+ol.upperroman {
+  list-style: upper-roman }
+
+p.attribution {
+  text-align: right ;
+  margin-left: 50% }
+
+p.caption {
+  font-style: italic }
+
+p.credits {
+  font-style: italic ;
+  font-size: smaller }
+
+p.label {
+  white-space: nowrap }
+
+p.rubric {
+  font-weight: bold ;
+  font-size: larger ;
+  color: maroon ;
+  text-align: center }
+
+p.sidebar-title {
+  font-family: sans-serif ;
+  font-weight: bold ;
+  font-size: larger }
+
+p.sidebar-subtitle {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+p.topic-title {
+  color: #527bbd;
+  font-weight: bold }
+
+pre.address {
+  margin-bottom: 0 ;
+  margin-top: 0 ;
+  font: inherit }
+
+pre.literal-block, pre.doctest-block {
+  margin-left: 2em ;
+  margin-right: 2em;
+  background-color: #f5f5f5;
+  padding: 5px;
+}
+
+span.classifier {
+  font-family: sans-serif ;
+  font-style: oblique }
+
+span.classifier-delimiter {
+  font-family: sans-serif ;
+  font-weight: bold }
+
+span.interpreted {
+  font-family: sans-serif }
+
+span.option {
+  white-space: nowrap }
+
+span.pre {
+  white-space: pre }
+
+span.problematic {
+  color: red }
+
+span.section-subtitle {
+  /* font-size relative to parent (h1..h6 element) */
+  font-size: 80% }
+
+table.citation {
+  border-collapse: collapse; 
+  border-left: solid 1px gray;
+  margin-left: 1px }
+
+
+table.docinfo {
+  border-collapse: collapse; 
+  margin: 2em 4em }
+
+
+table.docutils {
+  border-collapse: collapse; 
+  border: 3px solid #527bbd;
+  margin-top: 0.5em ;
+  margin-bottom: 0.5em }
+
+table.footnote {
+  border-collapse: collapse; 
+  border-left: solid 1px black;
+  margin-left: 1px }
+
+table.docutils td, table.docutils th,
+table.docinfo td, table.docinfo th {
+  border: 0px solid #527bbd;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  vertical-align: top }
+
+table.docutils th.field-name, table.docinfo th.docinfo-name {
+  font-weight: bold ;
+  text-align: left ;
+  white-space: nowrap ;
+  padding-left: 0 }
+
+h1 tt.docutils, h2 tt.docutils, h3 tt.docutils,
+h4 tt.docutils, h5 tt.docutils, h6 tt.docutils {
+  font-size: 100% }
+
+ul.auto-toc {
+  list-style-type: none }
+
+/* bc addition */
+body {
+  margin: 1em 10% 1em 10%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #527bbd;
+  font-family: sans-serif;
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  line-height: 1.3;
+}
+
+h1, h2, h3 {
+  border-bottom: 2px solid silver;
+}  
+h1.title {
+  border-top: 4px solid silver;
+  border-bottom: 4px solid silver;
+  padding: 0.5em 0 0.5em 0;
+  margin-bottom: 1em;
+}
+   
+h2 {
+  padding-top: 0.5em;
+}  
+h3 {
+  float: left;
+}
+h3 + * {
+  clear: left;
+}
+
+div.section {
+  font-family: serif
+}
+
+</style>
+</head>
+<body>
+<div class="document" id="my-git-workflow">
+<h1 class="title">My Git Workflow</h1>
+<table class="docinfo" frame="void" rules="none">
+<col class="docinfo-name" />
+<col class="docinfo-content" />
+<tbody valign="top">
+<tr><th class="docinfo-name">Author:</th>
+<td>bc Wong</td></tr>
+<tr><th class="docinfo-name">Date:</th>
+<td>Jun 12, 2011</td></tr>
+</tbody>
+</table>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="auto-toc simple">
+<li><a class="reference internal" href="#preamble" id="id1">1&nbsp;&nbsp;&nbsp;Preamble</a></li>
+<li><a class="reference internal" href="#basic-concepts-for-beginners" id="id2">2&nbsp;&nbsp;&nbsp;Basic Concepts for Beginners</a></li>
+<li><a class="reference internal" href="#setup-and-introspection" id="id3">3&nbsp;&nbsp;&nbsp;Setup and Introspection</a><ul class="auto-toc">
+<li><a class="reference internal" href="#initialize-a-local-repository" id="id4">3.1&nbsp;&nbsp;&nbsp;Initialize a Local Repository</a></li>
+<li><a class="reference internal" href="#look-around" id="id5">3.2&nbsp;&nbsp;&nbsp;Look Around</a></li>
+<li><a class="reference internal" href="#make-more-branches" id="id6">3.3&nbsp;&nbsp;&nbsp;Make More Branches</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#edit-and-commit" id="id7">4&nbsp;&nbsp;&nbsp;Edit and Commit</a><ul class="auto-toc">
+<li><a class="reference internal" href="#make-changes" id="id8">4.1&nbsp;&nbsp;&nbsp;Make Changes</a></li>
+<li><a class="reference internal" href="#commit" id="id9">4.2&nbsp;&nbsp;&nbsp;Commit</a></li>
+<li><a class="reference internal" href="#amend-a-commit" id="id10">4.3&nbsp;&nbsp;&nbsp;Amend a Commit</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#fetch-push-and-conflicts" id="id11">5&nbsp;&nbsp;&nbsp;Fetch, Push and Conflicts</a><ul class="auto-toc">
+<li><a class="reference internal" href="#push-to-remote" id="id12">5.1&nbsp;&nbsp;&nbsp;Push to Remote</a></li>
+<li><a class="reference internal" href="#fetch-from-remote" id="id13">5.2&nbsp;&nbsp;&nbsp;Fetch from Remote</a></li>
+<li><a class="reference internal" href="#handle-conflicts" id="id14">5.3&nbsp;&nbsp;&nbsp;Handle Conflicts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#code-review" id="id15">6&nbsp;&nbsp;&nbsp;Code Review</a><ul class="auto-toc">
+<li><a class="reference internal" href="#review-uncommitted-code" id="id16">6.1&nbsp;&nbsp;&nbsp;Review Uncommitted Code</a></li>
+<li><a class="reference internal" href="#review-commits" id="id17">6.2&nbsp;&nbsp;&nbsp;Review Commits</a></li>
+<li><a class="reference internal" href="#prepare-a-patch" id="id18">6.3&nbsp;&nbsp;&nbsp;Prepare a Patch</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#self-study" id="id19">7&nbsp;&nbsp;&nbsp;Self-study</a></li>
+<li><a class="reference internal" href="#my-git-setup" id="id20">8&nbsp;&nbsp;&nbsp;My Git Setup</a></li>
+</ul>
+</div>
+<div class="section" id="preamble">
+<h1><a class="toc-backref" href="#id1">1&nbsp;&nbsp;&nbsp;Preamble</a></h1>
+<p>This is intended as a concise sing-along guide for task-specific git commands.
+I have strong feelings about how a beginner should not be exposed to the full
+spectrum of the git's power, or dangerous commands like &quot;<tt class="docutils literal">git pull</tt>&quot;. So this
+is an attempt to cover a subset of the concepts and commands in greater depth,
+which hopefully help readers learn more about git on their own. I am using
+git version 1.7.1 as I write this.</p>
+</div>
+<div class="section" id="basic-concepts-for-beginners">
+<h1><a class="toc-backref" href="#id2">2&nbsp;&nbsp;&nbsp;Basic Concepts for Beginners</a></h1>
+<dl class="docutils">
+<dt>repository</dt>
+<dd><p class="first">A repository (or repo) is a stand-alone revision controlled tree. Your
+repository may be connected to other repositories, and know about the
+states of these other repositories. These are called &quot;remote&quot;s.</p>
+<p class="last">Repositories are identified by human-friendly names.</p>
+</dd>
+<dt>commit object</dt>
+<dd><p class="first">In git, commits work at the repository level, not at the individual files
+level. A commit object describe a set of changes across many files. A commit
+object also includes any addition or removal of files. <strong>Each commit object
+points to its previous commit and represents the entire lineage</strong>, like a
+linked list. So given
+a single commit object, you can see the entire history of the repo up to
+that commit. But there is no way to identify later commits in general.</p>
+<p>Commit objects are identified by hashes (long non-sensible strings).
+Commits may have &quot;nicknames&quot; like branch names and tag names.</p>
+<p class="last">Once a commit object is created, it stays. Even if nothing is pointing to
+the commit, you can still get to it if you know its hash.</p>
+</dd>
+<dt>branch</dt>
+<dd><p class="first">You should think of a branch as a name that points to a commit. A
+repository can have many branches. Most of the time, you will be working on
+a branch. We call that the currently checked-out branch. As you create a
+new commit on the current branch, the branch &quot;pointer&quot; auto advances to
+point to the new commit.</p>
+<p class="last">Branches are identified by human-friendly names. The <tt class="docutils literal">master</tt> branch is
+typically trunk, by convention.</p>
+</dd>
+<dt><tt class="docutils literal">HEAD</tt></dt>
+<dd><p class="first">A special name for the currently checked out branch. Since a branch is a
+pointer to a commit, <tt class="docutils literal">HEAD</tt> also refers to the most recent commit in the
+current branch.</p>
+<p class="last">There is only one <tt class="docutils literal">HEAD</tt> in a repository, at most.</p>
+</dd>
+<dt>working tree</dt>
+<dd><p class="first">The working tree is your view of repository tree. Git stores its commits
+and branches in its own private area (the <tt class="docutils literal">.git</tt> directory under the repo
+root). You can modify the working tree all you want; git can always reset
+the working tree to the state described by any commit.</p>
+<p class="last">If you have changed any file that git is tracking, your working tree is
+<em>dirty</em>. Git will warn you when you are about to overwrite any dirty file.</p>
+</dd>
+</dl>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p>This guide is written as a sing-along. You will learn git better if you
+follow each step. Run this first to set things up:</p>
+<pre class="literal-block">
+$ git clone --bare git://github.com/bcwalrus/git-tutorial.git /tmp/git-tutorial
+</pre>
+<p class="last">And I want you to immediately forget what just happened. Right now. Forget.</p>
+</div>
+</div>
+<div class="section" id="setup-and-introspection">
+<h1><a class="toc-backref" href="#id3">3&nbsp;&nbsp;&nbsp;Setup and Introspection</a></h1>
+<div class="section" id="initialize-a-local-repository">
+<h2><a class="toc-backref" href="#id4">3.1&nbsp;&nbsp;&nbsp;Initialize a Local Repository</a></h2>
+<p>Our project already exists elsewhere on some central server. Let's
+initialize our local repository at <tt class="docutils literal"><span class="pre">~/ws/git-tutorial</span></tt>:</p>
+<pre class="literal-block">
+$ mkdir -p ~/ws
+$ cd ~/ws
+$ git clone git://github.com/bcwalrus/git-tutorial.git
+Initialized empty Git repository in /home/bcwalrus/ws/git-tutorial/.git/
+...
+Resolving deltas: 100% (38/38), done.
+
+$ cd git-tutorial/
+$ git remote -v
+origin      git://github.com/bcwalrus/git-tutorial.git (fetch)
+origin      git://github.com/bcwalrus/git-tutorial.git (push)
+</pre>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git clone <span class="pre">git://github.com/bcwalrus/git-tutorial.git</span></tt></dt>
+<dd><p class="first last">This creates a local repo from the remote repo, which is specified by the
+<tt class="docutils literal"><span class="pre">git://</span></tt> URL here. This remote repo is automatically linked, and is
+called <tt class="docutils literal">origin</tt>. You can rename <tt class="docutils literal">origin</tt> to something else. It is
+just a name.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git remote <span class="pre">-v</span></tt></dt>
+<dd><p class="first last">This shows you the remote repositories that we know about. This is useful
+if you collaborate with other people who have their own repositories, and
+need to link to their repos directly.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="look-around">
+<h2><a class="toc-backref" href="#id5">3.2&nbsp;&nbsp;&nbsp;Look Around</a></h2>
+<p>Let's explore a bit:</p>
+<pre class="literal-block">
+$ git branch
+* master
+
+$ git branch -r
+  origin/HEAD -&gt; origin/master
+  origin/adam
+  origin/branch-1.0
+  origin/master
+  origin/tutorial
+
+$ git log HEAD --graph --pretty=format:'%h -%d %s'
+* 5c09211 - (HEAD, origin/master, origin/HEAD, master) Updated README.rst with usage and examples
+* 406e897 - Fix python paths in scripts
+* ecd00d3 - Update import statements to work with python 2.4
+* 3b67880 - import * from a relative path is not allowed in python2.5
+* 8563952 - Initial commit
+</pre>
+<p>Before we go further, run <tt class="docutils literal">gitk <span class="pre">--all</span></tt> (Linux) or <tt class="docutils literal">gitx</tt> (Mac) if you have
+them installed. If you don't, install them now.</p>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git branch</tt></dt>
+<dd><p class="first last">This shows you all local branches. The current branch has a
+star in front of it. When you give it the <tt class="docutils literal"><span class="pre">-r</span></tt> flag, it shows the
+branches in the remote repos. When you want to refer to a remote branch,
+you need to prefix it with the repo name. e.g
+<tt class="docutils literal"><span class="pre">&lt;remote_repo&gt;/&lt;branch_name&gt;</span></tt>.
+Remote branches, which you do not directly manipulate, are totally separate
+from your local branches. They are different pointers.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git log HEAD ...</tt></dt>
+<dd><p class="first">This shows you the commit log starting from <tt class="docutils literal">HEAD</tt>. You can replace
+<tt class="docutils literal">HEAD</tt> with another commit object. The flags makes the
+output more concise and readable. I use a <tt class="docutils literal">gitlog</tt>
+alias that is even more elaborate. See <a class="reference internal" href="#my-git-setup">My Git Setup</a>.</p>
+<p class="last">The first line of the log output tells us that we at are commit 5c09211.
+This part: <tt class="docutils literal">(HEAD, origin/master, origin/HEAD, master)</tt> lists the
+pointers pointing to this commit.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="make-more-branches">
+<h2><a class="toc-backref" href="#id6">3.3&nbsp;&nbsp;&nbsp;Make More Branches</a></h2>
+<p>For a beginner of git, your branching strategy should be:</p>
+<ul class="simple">
+<li>Try to only work on one thing at a time, and do that work on your local
+<tt class="docutils literal">master</tt> branch.</li>
+<li>If you want to work on code that lives on a different remote branch, create a
+local branch with the same name.</li>
+</ul>
+<p>Remember that our current local branch is <tt class="docutils literal">master</tt>. Suppose we want to work
+on (or look at) the code in <tt class="docutils literal"><span class="pre">origin/branch-1.0</span></tt>. We do:</p>
+<pre class="literal-block">
+$ git branch branch-1.0 origin/branch-1.0
+Branch branch-1.0 set up to track remote branch branch-1.0 from origin.
+
+$ git branch
+  branch-1.0
+* master
+
+$ git checkout branch-1.0
+Switched to branch 'branch-1.0'
+
+$ git branch
+* branch-1.0
+  master
+
+$ git log HEAD --graph --pretty=format:'%h -%d %s'
+* f3bcac9 - (HEAD, origin/branch-1.0, branch-1.0) Show command output in error message
+* 406e897 - Fix python paths in scripts
+* ecd00d3 - Update import statements to work with python 2.4
+...
+
+$ git checkout master
+Switched to branch 'master'
+</pre>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git branch &lt;new_branch&gt; &lt;starting_point&gt;</tt></dt>
+<dd><p class="first last">We created a new local branch called <tt class="docutils literal"><span class="pre">branch-1.0</span></tt>, which points to
+whatever commit that <tt class="docutils literal"><span class="pre">origin/branch-1.0</span></tt> is currently pointing to.
+The new branch shows up in the next <tt class="docutils literal">git branch</tt> command.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git checkout &lt;branch_name&gt;</tt></dt>
+<dd><p class="first last">Checking out a branch means replacing your working tree with the content
+from the specified branch (i.e. the commit object that the branch points
+to). Git will only replace objects that it is tracking. It will not
+overwrite your dirty changes. This command is always safe.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="edit-and-commit">
+<h1><a class="toc-backref" href="#id7">4&nbsp;&nbsp;&nbsp;Edit and Commit</a></h1>
+<div class="section" id="make-changes">
+<h2><a class="toc-backref" href="#id8">4.1&nbsp;&nbsp;&nbsp;Make Changes</a></h2>
+<p>Let's make a change on the current branch, <tt class="docutils literal">master</tt>. Edit
+<tt class="docutils literal">src/gitreview/cli/exceptions.py</tt>, and change the end of the file to:</p>
+<pre class="literal-block">
+class CommandArgumentsError(CLIError):
+    def __init__(self, msg):
+        msg = 'Command argument error: %s' % (msg,)
+        CLIError.__init__(self, message)
+</pre>
+<p>Next we add a TODO file:</p>
+<pre class="literal-block">
+$ cd ~/ws/git-tutorial
+$ echo &quot;Allow 3-way diff against common ancestor&quot; &gt; TODO
+</pre>
+<p>To look at the state of your working tree:</p>
+<pre class="literal-block">
+$ git status
+# On branch master
+# Changed but not updated:
+#   (use &quot;git add &lt;file&gt;...&quot; to update what will be committed)
+#   (use &quot;git checkout -- &lt;file&gt;...&quot; to discard changes in working directory)
+#
+#       modified:   src/gitreview/cli/exceptions.py
+#
+# Untracked files:
+#   (use &quot;git add &lt;file&gt;...&quot; to include in what will be committed)
+#
+#       TODO
+no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&quot;)
+</pre>
+<p>You should read the instructions in that output. Since git is already tracking
+<tt class="docutils literal">exceptions.py</tt>, it automatically notices that it has changed. But we have
+to tell git to track the new file manually:</p>
+<pre class="literal-block">
+$ git add TODO
+</pre>
+</div>
+<div class="section" id="commit">
+<h2><a class="toc-backref" href="#id9">4.2&nbsp;&nbsp;&nbsp;Commit</a></h2>
+<p>You should commit when you have made a consistent change. Commit frequently.
+And always review your changes before you commit. (More on that later in
+section <a class="reference internal" href="#code-review">Code Review</a>.)
+Here, I will show you 2 options.</p>
+<ol class="arabic">
+<li><p class="first">You can <tt class="docutils literal">git add</tt> all files you would like to
+commit, and then proceed to commit:</p>
+<pre class="literal-block">
+$ git add src/gitreview/cli/exceptions.py
+$ git status
+...
+$ git commit
+</pre>
+</li>
+<li><p class="first">Or, if you only have a small number of modified files, you can pass the
+files as arguments:</p>
+<pre class="literal-block">
+$ git commit src/gitreview/cli/exceptions.py TODO
+</pre>
+</li>
+</ol>
+<p>After you entered <tt class="docutils literal">git commit ...</tt>, you will see the commit screen.
+You will now enter the commit message. This is a reasonable guideline for
+<a class="reference external" href="https://github.com/erlang/otp/wiki/Writing-good-commit-messages">good commit messages</a>. For this
+commit message, simply enter &quot;Test commit&quot;, save the file and quit.</p>
+<p>Let's look at our history again:</p>
+<pre class="literal-block">
+$ git log HEAD --graph --pretty=format:'%h -%d %s'
+* caca1f5 - (HEAD, master) Test commit
+* 5c09211 - (origin/master, origin/HEAD) Updated README.rst with usage and examples
+* 406e897 - Fix python paths in scripts
+...
+</pre>
+<p>The <tt class="docutils literal">HEAD</tt> and <tt class="docutils literal">master</tt> branch pointers automatically advance to point to
+the new commit. Note that this is a local commit. You have <strong>not</strong> pushed your
+work back to the <tt class="docutils literal">origin</tt> repo yet -- <tt class="docutils literal">origin/master</tt> <strong>remains unchanged</strong>
+for now.</p>
+</div>
+<div class="section" id="amend-a-commit">
+<h2><a class="toc-backref" href="#id10">4.3&nbsp;&nbsp;&nbsp;Amend a Commit</a></h2>
+<p>We messed up. There is an error in our code. The last line below should
+say <tt class="docutils literal">msg</tt> instead of <tt class="docutils literal">message</tt>:</p>
+<pre class="literal-block">
+class CommandArgumentsError(CLIError):
+    def __init__(self, msg):
+        msg = 'Command argument error: %s' % (msg,)
+        CLIError.__init__(self, message)              ## ERROR !!!
+</pre>
+<p>Edit the file <tt class="docutils literal">src/gitreview/cli/exceptions.py</tt> and fix that line. If you do
+<tt class="docutils literal">git status</tt>, you will see that the file is dirty again:</p>
+<pre class="literal-block">
+$ git status
+...
+$ git add src/gitreview/cli/exceptions.py
+$ git commit --amend
+</pre>
+<p>The <tt class="docutils literal"><span class="pre">--amend</span></tt> flag amends <tt class="docutils literal">HEAD</tt>. You also have a chance to amend the
+commit message. Save the commit message. Done. The new commit object will have
+a different hash, and is a different object from the old commit. The old commit
+object is still hanging around. If there are branches or tags pointing to the
+old commit object, they do <strong>not</strong> see your amendment. But don't worry about it
+if nothing is pointing to the old commit. (Look at it in <tt class="docutils literal">gitk <span class="pre">--all</span></tt>.)</p>
+</div>
+</div>
+<div class="section" id="fetch-push-and-conflicts">
+<h1><a class="toc-backref" href="#id11">5&nbsp;&nbsp;&nbsp;Fetch, Push and Conflicts</a></h1>
+<div class="note">
+<p class="first admonition-title">Note</p>
+<p>To simulate a conflict, let's have another user change <tt class="docutils literal">origin</tt> behind our
+back. Run the following and immediately forget about it:</p>
+<pre class="last literal-block">
+$ git remote set-url origin /tmp/git-tutorial
+$ pushd /tmp/git-tutorial
+$ git symbolic-ref refs/heads/master refs/heads/adam ; popd
+</pre>
+</div>
+<div class="section" id="push-to-remote">
+<h2><a class="toc-backref" href="#id12">5.1&nbsp;&nbsp;&nbsp;Push to Remote</a></h2>
+<p>To share the work we have done, we need to push this commit back to the
+<tt class="docutils literal">master</tt> branch (i.e. trunk) on <tt class="docutils literal">origin</tt>:</p>
+<pre class="literal-block">
+$ git push origin HEAD:master
+To /tmp/git-tutorial.git
+ ! [rejected]        HEAD -&gt; master (non-fast-forward)
+error: failed to push some refs to '/tmp/git-tutorial.git'
+To prevent you from losing history, non-fast-forward updates were rejected
+Merge the remote changes before pushing again.  See the 'Note about
+fast-forwards' section of 'git push --help' for details.
+</pre>
+<p>Obviously it has failed. The <tt class="docutils literal">master</tt> branch in the remote repo has changed.
+We will deal with that in the next section.</p>
+<ul>
+<li><dl class="first docutils">
+<dt>non-fast-forward</dt>
+<dd><p class="first last">A fancy word for conflict. &quot;Fast forwarding&quot; a branch to a commit is only
+possible when that commit strictly builds on top of the branch, and
+includes all commits from that branch.
+Our push failed because <tt class="docutils literal">origin/master</tt> has been updated.</p>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git push origin HEAD:master</tt></dt>
+<dd><p class="first">The general syntax is &quot;<tt class="docutils literal">git push &lt;repository&gt; <span class="pre">&lt;from_commit&gt;:&lt;to_branch&gt;</span></tt>&quot;.
+The branch in <tt class="docutils literal">&lt;to_branch&gt;</tt> is always a remote branch in that
+<tt class="docutils literal">&lt;repository&gt;</tt>. For example, if you want to push to a feature branch, do
+&quot;<tt class="docutils literal">git push origin <span class="pre">master:bug-1234</span></tt>&quot;. (Try it now.) This will create a new
+branch called <tt class="docutils literal"><span class="pre">bug-1234</span></tt> in <tt class="docutils literal">origin</tt>. This new branch will point to the
+same commit as your local <tt class="docutils literal">master</tt> branch.</p>
+<p class="last">When you push something to a remote branch, you are asking that the remote
+branch point to your commit. Git will transfer your commit object plus its
+lineage to the remote repo. The remote branch will have the same hash.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="fetch-from-remote">
+<h2><a class="toc-backref" href="#id13">5.2&nbsp;&nbsp;&nbsp;Fetch from Remote</a></h2>
+<p>First we fetch the latest state of <tt class="docutils literal">origin</tt>:</p>
+<pre class="literal-block">
+$ git fetch origin
+From /tmp/git-tutorial
+   5c09211..f4aa278  master     -&gt; origin/master
+
+$ gitk --all &amp;
+</pre>
+<p><tt class="docutils literal">git fetch</tt> is one of the 3 git commands that talk to a remote repo in this
+guide. The other 2 are <tt class="docutils literal">git clone</tt> and <tt class="docutils literal">git push</tt>. The rest of the time,
+you are working on your local standalone repo, without affecting the rest of
+the world.</p>
+<p><tt class="docutils literal">git fetch</tt> does <strong>not</strong> update your working tree. It does <strong>not</strong> ask you to
+resolve conflicts (unlike <tt class="docutils literal">svn update</tt>). It simply downloads the state of
+<tt class="docutils literal">origin</tt> (to the private <tt class="docutils literal">.git</tt> directory) and updates the <tt class="docutils literal">origin/xyz</tt>
+pointers. It is <strong>always</strong> safe to fetch, even if you are in the middle of
+editing something. You can control when to merge with the remote branches and
+handle conflicts.</p>
+</div>
+<div class="section" id="handle-conflicts">
+<h2><a class="toc-backref" href="#id14">5.3&nbsp;&nbsp;&nbsp;Handle Conflicts</a></h2>
+<p>The diagram from <tt class="docutils literal">gitk</tt> show the divergence:</p>
+<pre class="literal-block">
+*   [HEAD, master] Test commit
+| * [origin/master] Enhance error logging
+ \|
+  * [HEAD^] Updated README.rst with usage and examples
+</pre>
+<p>What we want is a linear history with our &quot;Test commit&quot; applied directly on top
+of &quot;Enhance error logging&quot; (<tt class="docutils literal">origin/master</tt>):</p>
+<pre class="literal-block">
+$ git rebase origin/master
+...
+CONFLICT (content): Merge conflict in src/gitreview/cli/exceptions.py
+...
+When you have resolved this problem run &quot;git rebase --continue&quot;.
+If you would prefer to skip this patch, instead run &quot;git rebase --skip&quot;.
+To restore the original branch and stop rebasing run &quot;git rebase --abort&quot;.
+</pre>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git rebase origin/master</tt></dt>
+<dd><p class="first">Git will first save all the commits not in <tt class="docutils literal">origin/master</tt> (i.e. all your
+local commits). Then git will reset to <tt class="docutils literal">origin/master</tt>, and play
+back those saved commits. Remember that your local commits are being played
+back. If there is a conflict, the &quot;base&quot; version is <tt class="docutils literal">origin/master</tt>.</p>
+<p>If you mess up during a rebase, you can always do &quot;<tt class="docutils literal">git rebase <span class="pre">--abort</span></tt>&quot;
+and start over again.</p>
+<p class="last">Note that you can rebase a local branch on top of another local branch as
+well. You want to read the manpage carefully for this one (&quot;<tt class="docutils literal">man git
+rebase</tt>&quot;).</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>Our rebase runs into a genuine conflict. Edit
+<tt class="docutils literal">src/gitreview/cli/exceptions.py</tt>, fix it and save. Let's use the version
+marked as <tt class="docutils literal">HEAD</tt>:</p>
+<pre class="literal-block">
+class CommandArgumentsError(CLIError):
+    def __init__(self, msg):
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+        msg = 'bad arguments: %s' % (msg,)
+=======
+        msg = 'Command argument error: %s' % (msg,)
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; Test commit
+        CLIError.__init__(self, msg)
+</pre>
+<p>For fixing serious conflicts, I highly recommend <tt class="docutils literal">p4merge</tt>, which does
+a real 3-way merge. You can invoke it with &quot;<tt class="docutils literal">git mergetool</tt>&quot;. Any way,
+let's finish the rebase:</p>
+<pre class="literal-block">
+$ git add src/gitreview/cli/exceptions.py
+$ git rebase --continue
+Applying: Test commit
+Recorded resolution for 'src/gitreview/cli/exceptions.py'.
+
+$ git log --graph --pretty=format:'%h -%d %s'
+* 6a91d20 - (HEAD, master) Test commit
+* f4aa278 - (origin/master, origin/adam, origin/HEAD) Enhance error logging
+* 5c09211 - Updated README.rst with usage and examples
+...
+</pre>
+<p>Our commit is on top of <tt class="docutils literal">origin/master</tt> again. Let's push:</p>
+<pre class="literal-block">
+$ git push origin HEAD:master
+Counting objects: 4, done.
+...
+To /tmp/git-tutorial
+   f4aa278..6a91d20  HEAD -&gt; master
+</pre>
+</div>
+</div>
+<div class="section" id="code-review">
+<h1><a class="toc-backref" href="#id15">6&nbsp;&nbsp;&nbsp;Code Review</a></h1>
+<div class="section" id="review-uncommitted-code">
+<h2><a class="toc-backref" href="#id16">6.1&nbsp;&nbsp;&nbsp;Review Uncommitted Code</a></h2>
+<p>These are changes in the working tree that haven't been committed yet. Let's
+make a change, and show the diff of <strong>the working tree</strong> against <tt class="docutils literal">HEAD</tt>:</p>
+<pre class="literal-block">
+$ echo &quot;Add a graphical interface&quot; &gt;&gt; TODO
+$ git difftool TODO
+</pre>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal">git difftool</tt></dt>
+<dd><p class="first">You can configure the <tt class="docutils literal">diff.tool</tt> option in your <tt class="docutils literal">.gitconfig</tt> to avoid
+having to specify the tool every time.</p>
+<p>If you do not specify any files, i.e. simply <tt class="docutils literal">git difftool</tt>, it will loop
+and show you the diff of <strong>all</strong> modified files.</p>
+<p class="last">If you have already <tt class="docutils literal">git added</tt> your file, you need to add a <tt class="docutils literal"><span class="pre">--cached</span></tt>
+argument.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="review-commits">
+<h2><a class="toc-backref" href="#id17">6.2&nbsp;&nbsp;&nbsp;Review Commits</a></h2>
+<p>Before you push your commit to <tt class="docutils literal">origin</tt>, make the habit of reviewing it again.
+The instructions here are also applicable if you are the one reviewing someone
+else's commit. Let's say that we are interested in our most recent commit:</p>
+<pre class="literal-block">
+$ git difftool HEAD~..HEAD
+</pre>
+<ul>
+<li><dl class="first docutils">
+<dt><tt class="docutils literal"><span class="pre">origin/master..HEAD</span></tt></dt>
+<dd><p class="first">This &quot;<tt class="docutils literal"><span class="pre">&lt;from_commit&gt;..&lt;to_commit&gt;</span></tt>&quot; syntax is how you specify a commit
+range. As usual, you can use a hash or a pointer to refer to a commit. If
+you omit either end, git will use <tt class="docutils literal">HEAD</tt>.</p>
+<p class="last">The &quot;<tt class="docutils literal">HEAD~</tt>&quot; syntax means one commit before <tt class="docutils literal">HEAD</tt>. &quot;<tt class="docutils literal">HEAD~2</tt>&quot; means
+2 commits before <tt class="docutils literal">HEAD</tt>, and so on. You can use the &quot;<tt class="docutils literal">~</tt>&quot; on anything
+that refers to a commit (e.g. <tt class="docutils literal">master~</tt> also works).</p>
+</dd>
+</dl>
+</li>
+</ul>
+<p>To use another example, suppose we are interested in the &quot;Fix python paths&quot;
+commit:</p>
+<pre class="literal-block">
+$ git log --graph --pretty=format:'%h -%d %s'
+* 6a91d20 - (HEAD, origin/master, origin/HEAD, master) Test commit
+* f4aa278 - (origin/adam) Enhance error logging
+* 5c09211 - Updated README.rst with usage and examples
+* 406e897 - Fix python paths in scripts
+...
+</pre>
+<p>We can use the hash and do:</p>
+<pre class="literal-block">
+$ git difftool 406e897~..406e897
+</pre>
+</div>
+<div class="section" id="prepare-a-patch">
+<h2><a class="toc-backref" href="#id18">6.3&nbsp;&nbsp;&nbsp;Prepare a Patch</a></h2>
+<p>If you need to generate a patch for ReviewBoard or whatever reason, do:</p>
+<pre class="literal-block">
+$ git diff HEAD~..HEAD &gt; /tmp/bug.patch
+</pre>
+<p>The syntax is similar to <tt class="docutils literal">git difftool</tt>. <tt class="docutils literal">git diff</tt> takes an optional
+commit range, and an optional list of paths. If you don't specify any path,
+it'll diff all modified files. If you omit the commit range, it'll diff your
+working tree against <tt class="docutils literal">HEAD</tt>.</p>
+<p>Tip: For ReviewBoard, I find <a class="reference external" href="http://www.reviewboard.org/docs/manual/dev/users/tools/post-review/">post-review</a> more
+convenient.</p>
+</div>
+</div>
+<div class="section" id="self-study">
+<h1><a class="toc-backref" href="#id19">7&nbsp;&nbsp;&nbsp;Self-study</a></h1>
+<p>Spend at least a week with the git commands you've learned here. When you
+get comfortable with them, I recommend these more advanced commands. Read the
+manpages and experiment:</p>
+<pre class="literal-block">
+git rebase -i
+git reset
+git show
+git cherry-pick
+</pre>
+<p>I also highly recommend the <a class="reference external" href="https://github.com/bcwalrus/git-review">git-review</a> tool for doing code review.</p>
+</div>
+<div class="section" id="my-git-setup">
+<h1><a class="toc-backref" href="#id20">8&nbsp;&nbsp;&nbsp;My Git Setup</a></h1>
+<p>I have this alias:</p>
+<pre class="literal-block">
+alias gitlog=&quot;git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit&quot;
+</pre>
+<p>Here is my <tt class="docutils literal"><span class="pre">~/.gitconfig</span></tt>. I highly recommend enhancing the
+colour settings in yours. If you do not use <tt class="docutils literal">p4merge</tt> or <tt class="docutils literal">vimdiff</tt>,
+remove the sections on merge and diff.</p>
+<pre class="literal-block">
+[user]
+        name = bc Wong
+        email = ***nospam***
+
+[color]
+        diff = auto
+        status = auto
+        branch = auto
+        interactive = auto
+        ui = true
+        pager = true
+[color &quot;branch&quot;]
+        current = yellow reverse
+        local = yellow
+        remote = green
+[color &quot;diff&quot;]
+        meta = blue bold
+        frag = magenta bold
+        old = red
+        new = green
+[color &quot;status&quot;]
+        added = yellow
+        changed = green
+        untracked = cyan
+
+[format]
+        outputDirectory=/tmp/patches
+
+[rerere]
+        enabled = true
+
+[merge]
+        summary = true
+        tool = &quot;p4merge&quot;
+
+[mergetool &quot;p4merge&quot;]
+        path = /usr/share/p4v-2009.2.236331/bin/p4merge
+        cmd = &quot;/usr/share/p4v-2009.2.236331/bin/p4merge&quot; \
+                &quot;$PWD/$BASE&quot; \
+                    &quot;$PWD/$LOCAL&quot; \
+                    &quot;$PWD/$REMOTE&quot; \
+                    &quot;$PWD/$MERGED&quot;
+        keepBackup = false
+        trustExitCode = false
+
+[diff]
+        renameLimit = 5000
+        tool = vimdiff-ro
+        guitool = gvimdiff
+
+[difftool &quot;vimdiff-ro&quot;]
+        cmd = vimdiff -R $LOCAL $REMOTE
+
+[difftool]
+        prompt = no
+</pre>
+</div>
+</div>
+</body>
+</html>
