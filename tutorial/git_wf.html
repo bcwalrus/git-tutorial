@@ -3,10 +3,10 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta name="generator" content="Docutils 0.6: http://docutils.sourceforge.net/" />
+<meta name="generator" content="Docutils 0.7: http://docutils.sourceforge.net/" />
 <title>My Git Workflow</title>
 <meta name="author" content="bc Wong" />
-<meta name="date" content="Jun 12, 2011" />
+<meta name="date" content="Dec 05, 2011" />
 <style type="text/css">
 
 /*
@@ -362,7 +362,7 @@ div.section {
 <tr><th class="docinfo-name">Author:</th>
 <td>bc Wong</td></tr>
 <tr><th class="docinfo-name">Date:</th>
-<td>Jun 12, 2011</td></tr>
+<td>Dec 05, 2011</td></tr>
 </tbody>
 </table>
 <div class="contents topic" id="contents">
@@ -643,7 +643,7 @@ no changes added to commit (use &quot;git add&quot; and/or &quot;git commit -a&q
 </pre>
 <p>You should read the instructions in that output. Since git is already tracking
 <tt class="docutils literal">exceptions.py</tt>, it automatically notices that it has changed. But we have
-to tell git to track the new file manually:</p>
+to tell git to track the new <tt class="docutils literal">TODO</tt> file manually:</p>
 <pre class="literal-block">
 $ git add TODO
 </pre>
@@ -653,7 +653,7 @@ $ git add TODO
 <p>You should commit when you have made a consistent change. Commit frequently.
 And always review your changes before you commit. (More on that later in
 section <a class="reference internal" href="#code-review">Code Review</a>.)
-Here, I will show you 2 options.</p>
+Here, I will show you 2 ways to commit.</p>
 <ol class="arabic">
 <li><p class="first">You can <tt class="docutils literal">git add</tt> all files you would like to
 commit, and then proceed to commit:</p>
@@ -769,7 +769,7 @@ lineage to the remote repo. The remote branch will have the same hash.</p>
 </div>
 <div class="section" id="fetch-from-remote">
 <h2><a class="toc-backref" href="#id13">5.2&nbsp;&nbsp;&nbsp;Fetch from Remote</a></h2>
-<p>First we fetch the latest state of <tt class="docutils literal">origin</tt>:</p>
+<p>First we fetch the latest state of the <tt class="docutils literal">origin</tt> repo:</p>
 <pre class="literal-block">
 $ git fetch origin
 From /tmp/git-tutorial
@@ -798,7 +798,8 @@ handle conflicts.</p>
   * [HEAD^] Updated README.rst with usage and examples
 </pre>
 <p>What we want is a linear history with our &quot;Test commit&quot; applied directly on top
-of &quot;Enhance error logging&quot; (<tt class="docutils literal">origin/master</tt>):</p>
+of &quot;Enhance error logging&quot; (<tt class="docutils literal">origin/master</tt>), to include everything that is
+already in (<tt class="docutils literal">origin/master</tt>):</p>
 <pre class="literal-block">
 $ git rebase origin/master
 ...
@@ -813,8 +814,9 @@ To restore the original branch and stop rebasing run &quot;git rebase --abort&qu
 <dt><tt class="docutils literal">git rebase origin/master</tt></dt>
 <dd><p class="first">Git will first save all the commits not in <tt class="docutils literal">origin/master</tt> (i.e. all your
 local commits). Then git will reset to <tt class="docutils literal">origin/master</tt>, and play
-back those saved commits. Remember that your local commits are being played
-back. If there is a conflict, the &quot;base&quot; version is <tt class="docutils literal">origin/master</tt>.</p>
+back those saved local commits. Remember that your local commits are being
+played back. If there is a conflict, the &quot;base&quot; version is
+<tt class="docutils literal">origin/master</tt>.</p>
 <p>If you mess up during a rebase, you can always do &quot;<tt class="docutils literal">git rebase <span class="pre">--abort</span></tt>&quot;
 and start over again.</p>
 <p class="last">Note that you can rebase a local branch on top of another local branch as
@@ -852,7 +854,8 @@ $ git log --graph --pretty=format:'%h -%d %s'
 * 5c09211 - Updated README.rst with usage and examples
 ...
 </pre>
-<p>Our commit is on top of <tt class="docutils literal">origin/master</tt> again. Let's push:</p>
+<p>Our commit is on top of <tt class="docutils literal">origin/master</tt> again. Yeah! But this is just our
+local repo. Let's push:</p>
 <pre class="literal-block">
 $ git push origin HEAD:master
 Counting objects: 4, done.
@@ -867,11 +870,16 @@ To /tmp/git-tutorial
 <div class="section" id="review-uncommitted-code">
 <h2><a class="toc-backref" href="#id16">6.1&nbsp;&nbsp;&nbsp;Review Uncommitted Code</a></h2>
 <p>These are changes in the working tree that haven't been committed yet. Let's
-make a change, and show the diff of <strong>the working tree</strong> against <tt class="docutils literal">HEAD</tt>:</p>
+make a change, and show the diff of <strong>the working tree</strong> against <tt class="docutils literal">HEAD</tt>.</p>
+<ol class="arabic">
+<li><p class="first">Method 1</p>
 <pre class="literal-block">
 $ echo &quot;Add a graphical interface&quot; &gt;&gt; TODO
 $ git difftool TODO
 </pre>
+</li>
+</ol>
+<blockquote>
 <ul>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal">git difftool</tt></dt>
@@ -885,15 +893,38 @@ argument.</p>
 </dl>
 </li>
 </ul>
+</blockquote>
+<ol class="arabic" start="2">
+<li><p class="first">Method 2</p>
+<pre class="literal-block">
+$ src/git-review
+Now processing modified file tutorial/git_wf.rst
+git_wf.rst [diff]&gt;
+</pre>
+</li>
+</ol>
+<blockquote>
+<ul class="simple">
+<li>This code base that we are using as an exercise is actually a code review
+tool for git. Enter <tt class="docutils literal">?</tt> for help. It uses <tt class="docutils literal">vimdiff</tt>, tunable with the
+<tt class="docutils literal">$GIT_REVIEW_DIFF</tt> environment variable. See installation instructions
+at &lt;<a class="reference external" href="https://github.com/bcwalrus/git-review">https://github.com/bcwalrus/git-review</a>&gt;.</li>
+</ul>
+</blockquote>
 </div>
 <div class="section" id="review-commits">
 <h2><a class="toc-backref" href="#id17">6.2&nbsp;&nbsp;&nbsp;Review Commits</a></h2>
-<p>Before you push your commit to <tt class="docutils literal">origin</tt>, make the habit of reviewing it again.
+<p>Make the habit of reviewing your work again before pushing to <tt class="docutils literal">origin</tt>.
 The instructions here are also applicable if you are the one reviewing someone
-else's commit. Let's say that we are interested in our most recent commit:</p>
+else's commit. Let's say that we are interested in our most recent commit.</p>
+<ol class="arabic">
+<li><p class="first">Method 1</p>
 <pre class="literal-block">
 $ git difftool HEAD~..HEAD
 </pre>
+</li>
+</ol>
+<blockquote>
 <ul>
 <li><dl class="first docutils">
 <dt><tt class="docutils literal"><span class="pre">origin/master..HEAD</span></tt></dt>
@@ -921,6 +952,15 @@ $ git log --graph --pretty=format:'%h -%d %s'
 <pre class="literal-block">
 $ git difftool 406e897~..406e897
 </pre>
+</blockquote>
+<ol class="arabic" start="2">
+<li><p class="first">Method 2. These achieve the same thing:</p>
+<pre class="literal-block">
+$ src/git-review HEAD~ HEAD
+$ src/git-review 406e897~ 406e897
+</pre>
+</li>
+</ol>
 </div>
 <div class="section" id="prepare-a-patch">
 <h2><a class="toc-backref" href="#id18">6.3&nbsp;&nbsp;&nbsp;Prepare a Patch</a></h2>
@@ -946,8 +986,8 @@ git rebase -i
 git reset
 git show
 git cherry-pick
+git grep
 </pre>
-<p>I also highly recommend the <a class="reference external" href="https://github.com/bcwalrus/git-review">git-review</a> tool for doing code review.</p>
 </div>
 <div class="section" id="my-git-setup">
 <h1><a class="toc-backref" href="#id20">8&nbsp;&nbsp;&nbsp;My Git Setup</a></h1>
@@ -956,8 +996,7 @@ git cherry-pick
 alias gitlog=&quot;git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)&lt;%an&gt;%Creset' --abbrev-commit&quot;
 </pre>
 <p>Here is my <tt class="docutils literal"><span class="pre">~/.gitconfig</span></tt>. I highly recommend enhancing the
-colour settings in yours. If you do not use <tt class="docutils literal">p4merge</tt> or <tt class="docutils literal">vimdiff</tt>,
-remove the sections on merge and diff.</p>
+colour settings in yours.</p>
 <pre class="literal-block">
 [user]
         name = bc Wong
@@ -987,31 +1026,17 @@ remove the sections on merge and diff.</p>
 [format]
         outputDirectory=/tmp/patches
 
-[rerere]
-        enabled = true
-
 [merge]
         summary = true
-        tool = &quot;p4merge&quot;
-
-[mergetool &quot;p4merge&quot;]
-        path = /usr/share/p4v-2009.2.236331/bin/p4merge
-        cmd = &quot;/usr/share/p4v-2009.2.236331/bin/p4merge&quot; \
-                &quot;$PWD/$BASE&quot; \
-                    &quot;$PWD/$LOCAL&quot; \
-                    &quot;$PWD/$REMOTE&quot; \
-                    &quot;$PWD/$MERGED&quot;
-        keepBackup = false
-        trustExitCode = false
-
+        tool = &quot;vimdiff&quot;
+[rerere]
+        enabled = true
 [diff]
-        renameLimit = 5000
+        renameLimit = 500000000
         tool = vimdiff-ro
         guitool = gvimdiff
-
 [difftool &quot;vimdiff-ro&quot;]
         cmd = vimdiff -R $LOCAL $REMOTE
-
 [difftool]
         prompt = no
 </pre>

@@ -3,7 +3,7 @@ My Git Workflow
 ===============
 
 :Author: bc Wong
-:Date: Jun 12, 2011
+:Date: Dec 05, 2011
 
 .. sectnum::
     :depth: 2
@@ -237,7 +237,7 @@ To look at the state of your working tree::
 
 You should read the instructions in that output. Since git is already tracking
 ``exceptions.py``, it automatically notices that it has changed. But we have
-to tell git to track the new file manually::
+to tell git to track the new ``TODO`` file manually::
 
     $ git add TODO
 
@@ -247,7 +247,7 @@ Commit
 You should commit when you have made a consistent change. Commit frequently.
 And always review your changes before you commit. (More on that later in
 section `Code Review`_.)
-Here, I will show you 2 options.
+Here, I will show you 2 ways to commit.
 
 1. You can ``git add`` all files you would like to
    commit, and then proceed to commit::
@@ -357,7 +357,7 @@ We will deal with that in the next section.
 
 Fetch from Remote
 -----------------
-First we fetch the latest state of ``origin``::
+First we fetch the latest state of the ``origin`` repo::
 
     $ git fetch origin
     From /tmp/git-tutorial
@@ -388,7 +388,8 @@ The diagram from ``gitk`` show the divergence::
       * [HEAD^] Updated README.rst with usage and examples
 
 What we want is a linear history with our "Test commit" applied directly on top
-of "Enhance error logging" (``origin/master``)::
+of "Enhance error logging" (``origin/master``), to include everything that is
+already in (``origin/master``)::
 
     $ git rebase origin/master
     ...
@@ -401,8 +402,9 @@ of "Enhance error logging" (``origin/master``)::
 * ``git rebase origin/master``
     Git will first save all the commits not in ``origin/master`` (i.e. all your
     local commits). Then git will reset to ``origin/master``, and play
-    back those saved commits. Remember that your local commits are being played
-    back. If there is a conflict, the "base" version is ``origin/master``.
+    back those saved local commits. Remember that your local commits are being
+    played back. If there is a conflict, the "base" version is
+    ``origin/master``.
 
     If you mess up during a rebase, you can always do "``git rebase --abort``"
     and start over again.
@@ -439,7 +441,8 @@ let's finish the rebase::
     * 5c09211 - Updated README.rst with usage and examples
     ...
 
-Our commit is on top of ``origin/master`` again. Let's push::
+Our commit is on top of ``origin/master`` again. Yeah! But this is just our
+local repo. Let's push::
 
     $ git push origin HEAD:master
     Counting objects: 4, done.
@@ -454,12 +457,15 @@ Code Review
 Review Uncommitted Code
 -----------------------
 These are changes in the working tree that haven't been committed yet. Let's
-make a change, and show the diff of **the working tree** against ``HEAD``::
+make a change, and show the diff of **the working tree** against ``HEAD``.
+
+1. Method 1
+   ::
 
     $ echo "Add a graphical interface" >> TODO
     $ git difftool TODO
 
-* ``git difftool``
+ * ``git difftool``
     You can configure the ``diff.tool`` option in your ``.gitconfig`` to avoid
     having to specify the tool every time.
 
@@ -469,16 +475,31 @@ make a change, and show the diff of **the working tree** against ``HEAD``::
     If you have already ``git added`` your file, you need to add a ``--cached``
     argument.
 
+2. Method 2
+   ::
+
+    $ src/git-review
+    Now processing modified file tutorial/git_wf.rst
+    git_wf.rst [diff]>
+
+ * This code base that we are using as an exercise is actually a code review
+   tool for git. Enter ``?`` for help. It uses ``vimdiff``, tunable with the
+   ``$GIT_REVIEW_DIFF`` environment variable. See installation instructions
+   at <https://github.com/bcwalrus/git-review>.
+
 
 Review Commits
 --------------
-Before you push your commit to ``origin``, make the habit of reviewing it again.
+Make the habit of reviewing your work again before pushing to ``origin``.
 The instructions here are also applicable if you are the one reviewing someone
-else's commit. Let's say that we are interested in our most recent commit::
+else's commit. Let's say that we are interested in our most recent commit.
+
+1. Method 1
+   ::
 
     $ git difftool HEAD~..HEAD
 
-* ``origin/master..HEAD``
+ * ``origin/master..HEAD``
     This "``<from_commit>..<to_commit>``" syntax is how you specify a commit
     range. As usual, you can use a hash or a pointer to refer to a commit. If
     you omit either end, git will use ``HEAD``.
@@ -487,8 +508,8 @@ else's commit. Let's say that we are interested in our most recent commit::
     2 commits before ``HEAD``, and so on. You can use the "``~``" on anything
     that refers to a commit (e.g. ``master~`` also works).
 
-To use another example, suppose we are interested in the "Fix python paths"
-commit::
+ To use another example, suppose we are interested in the "Fix python paths"
+ commit::
 
     $ git log --graph --pretty=format:'%h -%d %s'
     * 6a91d20 - (HEAD, origin/master, origin/HEAD, master) Test commit
@@ -497,9 +518,14 @@ commit::
     * 406e897 - Fix python paths in scripts
     ...
 
-We can use the hash and do::
+ We can use the hash and do::
 
     $ git difftool 406e897~..406e897
+
+2. Method 2. These achieve the same thing::
+
+    $ src/git-review HEAD~ HEAD
+    $ src/git-review 406e897~ 406e897
 
 
 Prepare a Patch
@@ -528,9 +554,7 @@ manpages and experiment::
     git reset
     git show
     git cherry-pick
-
-I also highly recommend the `git-review
-<https://github.com/bcwalrus/git-review>`_ tool for doing code review.
+    git grep
 
 
 My Git Setup
@@ -540,8 +564,7 @@ I have this alias::
     alias gitlog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
 
 Here is my ``~/.gitconfig``. I highly recommend enhancing the
-colour settings in yours. If you do not use ``p4merge`` or ``vimdiff``,
-remove the sections on merge and diff.
+colour settings in yours.
 
 ::
 
@@ -573,30 +596,16 @@ remove the sections on merge and diff.
     [format]
             outputDirectory=/tmp/patches
 
-    [rerere]
-            enabled = true
-
     [merge]
             summary = true
-            tool = "p4merge"
-
-    [mergetool "p4merge"]
-            path = /usr/share/p4v-2009.2.236331/bin/p4merge
-            cmd = "/usr/share/p4v-2009.2.236331/bin/p4merge" \
-                    "$PWD/$BASE" \
-                        "$PWD/$LOCAL" \
-                        "$PWD/$REMOTE" \
-                        "$PWD/$MERGED"
-            keepBackup = false
-            trustExitCode = false
-
+            tool = "vimdiff" 
+    [rerere]
+            enabled = true
     [diff]
-            renameLimit = 5000
+            renameLimit = 500000000
             tool = vimdiff-ro
             guitool = gvimdiff
-
     [difftool "vimdiff-ro"]
             cmd = vimdiff -R $LOCAL $REMOTE
-
     [difftool]
             prompt = no
